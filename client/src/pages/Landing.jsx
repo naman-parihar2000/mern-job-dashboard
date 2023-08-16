@@ -1,26 +1,27 @@
 import styled from "styled-components";
 import Wrapper from "../assets/wrappers/LandingPage";
 import main from "../assets/images/main-alternative.svg";
-import logo from "../assets/images/logo.svg";
 import { Link } from "react-router-dom";
+import { Logo } from "../components/index";
 
 const Landing = () => {
   return (
     <Wrapper>
       <nav>
-        <img src={logo} alt="jobify-logo" className="logo" />
+        <Logo />
       </nav>
       <div className="container page">
-        {/* info */}
         <div className="info">
           <h1>
-            job <span>tracking</span> app
+            job <span>hunt</span> application
           </h1>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minima
-            perspiciatis laboriosam excepturi dignissimos vero optio
-            consequuntur tempore laudantium magnam distinctio officiis
-            cupiditate error dicta sed non consequatur neque, eos sequi.
+            Welcome to Job <span>Hunt</span> Application - ultimate platform for
+            streamlined job searching and seamless connections with prospective
+            employers. Explore a vast array of job opportunities, tailor your
+            search with precision, and launch your career journey with
+            confidence. Join us today to embark on a new chapter of professional
+            growth and success.
           </p>
           <Link to="/register" className="btn register-link">
             Register
