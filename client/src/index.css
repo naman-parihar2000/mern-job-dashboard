@@ -51,6 +51,7 @@ html {
   /* rest of the vars */
 
   --border-radius: 0.25rem;
+  --border-radius2: 12px;
   --letter-spacing: 1px;
   --transition: 0.3s ease-in-out all;
   --max-width: 1120px;

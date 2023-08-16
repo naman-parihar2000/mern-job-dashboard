@@ -25,7 +25,7 @@ const Wrapper = styled.aside`
     background: var(--background-secondary-color);
     width: var(--fluid-width);
     height: 95vh;
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius2);
     padding: 4rem 2rem;
     position: relative;
     display: flex;
@@ -34,12 +34,12 @@ const Wrapper = styled.aside`
   }
   .close-btn {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 15px;
+    right: 15px;
     background: transparent;
     border-color: transparent;
-    font-size: 2rem;
-    color: var(--red-dark);
+    font-size: 1.6rem;
+    color: var(--primary-500);
     cursor: pointer;
   }
   .nav-links {
