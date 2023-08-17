@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.nav`
   height: var(--nav-height);
@@ -24,6 +24,8 @@ const Wrapper = styled.nav`
   }
   .logo-text {
     display: none;
+    text-transform: uppercase;
+    font-weight: 400;
   }
   .logo {
     display: flex;
@@ -33,6 +35,7 @@ const Wrapper = styled.nav`
   .btn-container {
     display: flex;
     align-items: center;
+    gap: 10px;
   }
   @media (min-width: 992px) {
     position: sticky;

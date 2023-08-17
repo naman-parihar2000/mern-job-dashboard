@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.aside`
   @media (min-width: 992px) {
@@ -24,7 +24,7 @@ const Wrapper = styled.aside`
   .content {
     background: var(--background-secondary-color);
     width: var(--fluid-width);
-    height: 95vh;
+    height: 80vh;
     border-radius: var(--border-radius2);
     padding: 4rem 2rem;
     position: relative;

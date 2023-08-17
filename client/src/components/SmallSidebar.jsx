@@ -2,7 +2,7 @@ import Wrapper from "../assets/wrappers/SmallSidebar";
 import { useDashboardContext } from "../pages/DashboardLayout";
 import Logo from "./Logo";
 import links from "../utils/links";
-import { FaTimes } from "react-icons/fa";
+import { HiOutlineX } from "react-icons/hi";
 import NavLinks from "./NavLinks";
 
 const SmallSidebar = () => {
@@ -16,7 +16,7 @@ const SmallSidebar = () => {
       >
         <div className="content">
           <button type="button" className="close-btn" onClick={toggleSidebar}>
-            <FaTimes />
+            <HiOutlineX />
           </button>
           <header>
             <Logo />

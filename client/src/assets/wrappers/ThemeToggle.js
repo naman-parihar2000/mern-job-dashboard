@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.button`
   background: transparent;
@@ -9,7 +9,7 @@ const Wrapper = styled.button`
   place-items: center;
   cursor: pointer;
   .toggle-icon {
-    font-size: 1.15rem;
+    font-size: 1.5rem;
     color: var(--text-color);
   }
 `;
