@@ -3,12 +3,9 @@ dotenv.config();
 import express from "express";
 const app = express();
 import morgan from "morgan";
-import { nanoid } from "nanoid";
 
-let jobs = [
-  { id: nanoid(), company: "apple", position: "front-end" },
-  { id: nanoid(), company: "google", position: "back-end" },
-];
+//  CUSTOM IMPORT
+import jobRouter from "./routes/jobRouter.js";
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -25,83 +22,31 @@ app.post("/", (req, res) => {
   res.json({ data: req.body });
 });
 
+app.use("/api/v1/jobs", jobRouter);
 
-//GET ALL JOBS
-app.get("/api/v1/jobs", (req, res) => {
-    res.status(200).json({ jobs });
-  });
-  
-  //CREATE A JOB
-  app.post("/api/v1/jobs", (req, res) => {
-    const { company, position } = req.body;
-    if (!company || !position) {
-      return res.json
-        .status(400)
-        .json({ msg: "provider position and company both" });
-    }
-    const id = nanoid(10);
-    const job = { id, company, position };
-    jobs.push(job);
-    res.status(201).json({ jobs });
-  });
-  
-  //GET A JOB BY ID
-  app.get("/api/v1/jobs/:id", (req, res) => {
-    const { id } = req.params;
-    const job = jobs.find((job) => job.id === id);
-    if (!job) {
-      return res.status(404).json({ msg: `no job with id ${id}` });
-    }
-    res.status(200).json({ job });
-  });
-  
-  //EDIT A JOB BY ID
-  app.patch("/api/v1/jobs/:id", (req, res) => {
-    const { company, position } = req.body;
-    if (!company || !position) {
-      return res.json
-        .status(400)
-        .json({ msg: "provider position and company both" });
-    }
-    const { id } = req.params;
-    const job = jobs.find((job) => job.id === id);
-    if (!job) {
-      return res.status(404).json({ msg: `no job with id ${id}` });
-    }
-    job.company = company;
-    job.position = position;
-    res.status(200).json({ msg: "job modified", job });
-  });
-  
-  //EDIT A JOB BY ID
-  app.patch("/api/v1/jobs/:id", (req, res) => {
-    const { company, position } = req.body;
-    if (!company || !position) {
-      return res.json
-        .status(400)
-        .json({ msg: "provider position and company both" });
-    }
-    const { id } = req.params;
-    const job = jobs.find((job) => job.id === id);
-    if (!job) {
-      return res.status(404).json({ msg: `no job with id ${id}` });
-    }
-    job.company = company;
-    job.position = position;
-    res.status(200).json({ msg: "job modified", job });
-  });
-  
-  //DELETE A JOB BY ID
-  app.delete("/api/v1/jobs/:id", (req, res) => {
-    const { id } = req.params;
-    const job = jobs.find((job) => job.id === id);
-    if (!job) {
-      return res.status(404).json({ msg: `no job with id ${id}` });
-    }
-    const newJobs = jobs.filter((job) => job.id !== id);
-    jobs = newJobs;
-    res.status(200).json({ msg: "job deleted" });
-  });
+// //GET ALL JOBS
+// app.get("/api/v1/jobs");
+
+// //CREATE A JOB
+// app.post("/api/v1/jobs");
+
+// //GET A JOB BY ID
+// app.get("/api/v1/jobs/:id");
+
+// //EDIT JOB BY ID
+// app.patch("/api/v1/jobs/:id");
+
+// //DELETE A JOB BY ID
+// app.delete("/api/v1/jobs/:id");
+
+app.use("*", (req, res) => {
+  res.status(404).json({ msg: "not found!" });
+});
+
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(500).json({ msg: "somthing went wrong!" });
+});
 
 const port = process.env.PORT || 5100;
 
