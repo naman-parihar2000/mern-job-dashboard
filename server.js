@@ -1,3 +1,4 @@
+import 'express-async-errors';
 import * as dotenv from "dotenv";
 dotenv.config();
 import express from "express";
@@ -7,6 +8,7 @@ import mongoose from "mongoose";
 
 //  CUSTOM IMPORT
 import jobRouter from "./routes/jobRouter.js";
+import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -15,7 +17,7 @@ if (process.env.NODE_ENV === "development") {
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Welcome to heaven...");
+  res.send("WELCOME TO HEAVEN...");
 });
 
 app.post("/", (req, res) => {
@@ -41,13 +43,10 @@ app.use("/api/v1/jobs", jobRouter);
 // app.delete("/api/v1/jobs/:id");
 
 app.use("*", (req, res) => {
-  res.status(404).json({ msg: "not found!" });
+  res.status(404).json({ msg: "NOT FOUND!" });
 });
 
-app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(500).json({ msg: "somthing went wrong!" });
-});
+app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 5100;
 
