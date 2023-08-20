@@ -1,4 +1,4 @@
-import 'express-async-errors';
+import "express-async-errors";
 import * as dotenv from "dotenv";
 dotenv.config();
 import express from "express";
@@ -6,9 +6,12 @@ const app = express();
 import morgan from "morgan";
 import mongoose from "mongoose";
 
-//  CUSTOM IMPORT
+//ROUTER IMPORT
 import jobRouter from "./routes/jobRouter.js";
-import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
+import authRouter from "./routes/authRouter.js";
+
+//  CUSTOM IMPORT
+import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -26,6 +29,7 @@ app.post("/", (req, res) => {
 });
 
 app.use("/api/v1/jobs", jobRouter);
+app.use("/api/v1/auth", authRouter);
 
 // //GET ALL JOBS
 // app.get("/api/v1/jobs");
