@@ -1,20 +1,15 @@
 import Job from "../models/JobModel.js";
 import { StatusCodes } from "http-status-codes";
-import { nanoid } from "nanoid";
-
-let jobs = [
-  { id: nanoid(), company: "apple", position: "front-end" },
-  { id: nanoid(), company: "google", position: "back-end" },
-];
 
 //GET ALL JOBS
 export const getAllJobs = async (req, res) => {
-  const jobs = await Job.find({});
+  const jobs = await Job.find({createdBy : req.user.userId});
   res.status(StatusCodes.OK).json({ jobs });
 };
 
 //CREATE A JOB
 export const createJob = async (req, res) => {
+  req.body.createdBy = req.user.userId
   const job = await Job.create(req.body);
   res.status(StatusCodes.CREATED).json({ job });
 };
@@ -27,7 +22,9 @@ export const getJob = async (req, res) => {
 
 //EDIT JOB BY ID
 export const updateJob = async (req, res) => {
-  const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
   res.status(StatusCodes.OK).json({ msg: "JOB MODIFIED", job: updatedJob });
 };
 
