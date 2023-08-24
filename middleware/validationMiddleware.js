@@ -1,5 +1,9 @@
 import { param, body, validationResult } from "express-validator";
-import { BadRequestError, NotFoundError } from "../errors/customError.js";
+import {
+  BadRequestError,
+  NotFoundError,
+  UnauthorizedError,
+} from "../errors/customError.js";
 import { JOB_STATUS, JOB_TYPE } from "../utils/constants.js";
 import mongoose from "mongoose";
 import Job from "../models/JobModel.js";
@@ -12,8 +16,11 @@ const withValidationErrors = (validateValues) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const errorMessages = errors.array().map((error) => error.msg);
-        if (errorMessages[0].startsWith("no job")) {
+        if (errorMessages[0].startsWith("NO JOB")) {
           throw new NotFoundError(errorMessages);
+        }
+        if (errorMessages[0].startsWith("NOT AUTHORIZED")) {
+          throw new UnauthorizedError("NOT AUTHORIZED TO ACCESS THIS ROUTE");
         }
         throw new BadRequestError(errorMessages);
       }
@@ -35,11 +42,15 @@ export const validateJobInput = withValidationErrors([
 ]);
 
 export const validIdParam = withValidationErrors([
-  param("id").custom(async (value) => {
+  param("id").custom(async (value, { req }) => {
     const isValidId = mongoose.Types.ObjectId.isValid(value);
     if (!isValidId) throw new BadRequestError("INVALID MONGODB ID");
     const job = await Job.findById(value);
     if (!job) throw new NotFoundError(`NO JOB WITH THIS ID: ${value} FOUND`);
+    const isAdmin = req.user.role === "admin";
+    const isOwner = req.user.userId === job.createdBy.toString();
+    if (!isAdmin && !isOwner)
+      throw new UnauthorizedError("NOT AUTHORIZED TO ACCESS THIS ROUTE");
   }),
 ]);
 
@@ -58,7 +69,7 @@ export const validateRegisterInput = withValidationErrors([
     }),
   body("password")
     .notEmpty()
-    .withMessage("password is required")
+    .withMessage(" PASSWORD IS REQUIRED ")
     .isLength({ min: 8 })
     .withMessage("PASSWORD MUST BE 8 CHARACTERS LONG"),
 
@@ -73,4 +84,21 @@ export const validLoginInput = withValidationErrors([
     .isEmail()
     .withMessage(" INVALID EMAIL FORMAT "),
   body("password").notEmpty().withMessage(" PASSWORD IS REQUIRED "),
+]);
+
+const validateUpdateUserInput = withValidationErrors([
+  body("name").notEmpty().withMessage("name is required"),
+  body("email")
+    .notEmpty()
+    .withMessage("EMAIL IS REQUIRED")
+    .isEmail()
+    .withMessage("INVALID EMAIL FORMAT ")
+    .custom(async (email, { req }) => {
+      const user = await User.findOne({ email });
+      if (user && user._id.toString() !== req.user.userId) {
+        throw new Error("EMAIL ALREADY EXISTS");
+      }
+    }),
+  body("location").notEmpty().withMessage("LOCATION IS REQUIRED"),
+  body("lastName").notEmpty().withMessage("LAST NAME IS REQUIRED"),
 ]);
