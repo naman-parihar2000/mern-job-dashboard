@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 //ROUTER IMPORT
 import jobRouter from "./routes/jobRouter.js";
 import authRouter from "./routes/authRouter.js";
-import userRouter from './routers/userRouter.js';
+import userRouter from "./routers/userRouter.js";
 
 //  CUSTOM IMPORT
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -33,8 +33,12 @@ app.post("/", (req, res) => {
 });
 
 app.use("/api/v1/jobs", authenticateUser, jobRouter);
-app.use('/api/v1/users', authenticateUser, userRouter);
+app.use("/api/v1/users", authenticateUser, userRouter);
 app.use("/api/v1/auth", authRouter);
+
+app.get("/api/v1/test", (req, res) => {
+  res.json({ msg: "test route" });
+});
 
 // //GET ALL JOBS
 // app.get("/api/v1/jobs");
