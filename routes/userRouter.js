@@ -15,4 +15,5 @@ router.get("/admin/app-stats", [
   getApplicationStats,
 ]);
 router.patch("/update-user", validateUpdateUserInput, updateUser);
+
 export default router;

@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 //ROUTER IMPORT
 import jobRouter from "./routes/jobRouter.js";
 import authRouter from "./routes/authRouter.js";
-import userRouter from "./routers/userRouter.js";
+import userRouter from "./routes/userRouter.js"
 
 //  CUSTOM IMPORT
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
