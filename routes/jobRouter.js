@@ -9,12 +9,16 @@ import {
 } from "../controllers/jobController.js";
 import { validateJobInput } from "../middleware/validationMiddleware.js";
 import { validIdParam } from "../middleware/validationMiddleware.js";
+import { checkForTestUser } from "../middleware/authMiddleware.js";
 
-router.route("/").get(getAllJobs).post(validateJobInput, createJob);
+router
+  .route("/")
+  .get(getAllJobs)
+  .post(checkForTestUser, validateJobInput, createJob);
 router
   .route("/:id")
   .get(validIdParam, getJob)
-  .patch(validateJobInput, updateJob)
-  .delete(validIdParam, deleteJob);
+  .patch(checkForTestUser, validateJobInput, updateJob)
+  .delete(checkForTestUser, validIdParam, deleteJob);
 
 export default router;
