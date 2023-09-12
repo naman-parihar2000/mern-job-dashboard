@@ -1,4 +1,10 @@
-import { Link, Form, redirect, useNavigation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  Form,
+  redirect,
+  useNavigation,
+  useNavigate,
+} from "react-router-dom";
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow, Logo, SubmitBtn } from "../components";
 import customFetch from "../utils/customFetch";
@@ -37,8 +43,8 @@ const Login = () => {
       <Form method="post" className="form">
         <Logo />
         <h4>Login</h4>
-        <FormRow type="email" name="email" defaultValue="name@gmail.com" />
-        <FormRow type="password" name="password" defaultValue="secret123" />
+        <FormRow type="email" name="email" />
+        <FormRow type="password" name="password" />
         <SubmitBtn />
         <button type="button" className="btn btn-block" onClick={loginDemoUser}>
           explore the app
