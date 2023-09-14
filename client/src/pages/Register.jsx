@@ -28,7 +28,6 @@ const Register = () => {
           type="text"
           name="lastName"
           labelText="last name"
-          defaultValue="singh"
         />
         <FormRow type="text" name="location" />
         <FormRow type="email" name="email" />

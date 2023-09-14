@@ -9,8 +9,9 @@ const FormRow = ({ type, name, labelText, defaultValue, onChange }) => {
         id={name}
         name={name}
         className="form-input"
-        defaultValue={defaultValue || " "}
+        defaultValue={defaultValue || ""}
         onChange={onchange}
+        autoComplete="current-password"
         required
       />
     </div>

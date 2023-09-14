@@ -77,7 +77,7 @@ export const validateRegisterInput = withValidationErrors([
   body("lastName").notEmpty().withMessage("LAST NAME IS REQUIRED"),
 ]);
 
-export const validLoginInput = withValidationErrors([
+export const validateLoginInput = withValidationErrors([
   body("email")
     .notEmpty()
     .withMessage(" EMAIL IS REQUIRED ")
