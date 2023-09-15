@@ -31,47 +31,33 @@ cloudinary.config({
 });
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-
 app.use(express.static(path.resolve(__dirname, "./client/dist")));
 app.use(cookieParser());
 app.use(express.json());
 app.use(helmet());
 app.use(mongoSanitize());
 
-app.post("/", (req, res) => {
-  //   console.log(req);
-  res.json({ data: req.body });
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+
+app.get("/api/v1/test", (req, res) => {
+  res.json({ msg: "test route" });
 });
 
 app.use("/api/v1/jobs", authenticateUser, jobRouter);
 app.use("/api/v1/users", authenticateUser, userRouter);
 app.use("/api/v1/auth", authRouter);
 
-// //GET ALL JOBS
-// app.get("/api/v1/jobs");
-
-// //CREATE A JOB
-// app.post("/api/v1/jobs");
-
-// //GET A JOB BY ID
-// app.get("/api/v1/jobs/:id");
-
-// //EDIT JOB BY ID
-// app.patch("/api/v1/jobs/:id");
-
-// //DELETE A JOB BY ID
-// app.delete("/api/v1/jobs/:id");
-
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "./client/dist", "index.html"));
 });
 
 app.use("*", (req, res) => {
-  res.status(404).json({ msg: "NOT FOUND!" });
+  res.status(404).json({ msg: "not found" });
 });
 
 app.use(errorHandlerMiddleware);
@@ -80,9 +66,8 @@ const port = process.env.PORT || 5100;
 
 try {
   await mongoose.connect(process.env.MONGO_URL);
-  console.log(`DATABASE CONNECTED`);
   app.listen(port, () => {
-    console.log(`SERVER RUNNING ON PORT ${port}`);
+    console.log(`SERVER RUNNING ON PORT ${port}.`);
   });
 } catch (error) {
   console.log(error);

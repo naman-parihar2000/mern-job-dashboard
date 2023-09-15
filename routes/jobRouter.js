@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router } from 'express';
 const router = Router();
 import {
   getAllJobs,
@@ -7,22 +7,24 @@ import {
   updateJob,
   deleteJob,
   showStats,
-} from "../controllers/jobController.js";
-import { validateJobInput } from "../middleware/validationMiddleware.js";
-import { validIdParam } from "../middleware/validationMiddleware.js";
-import { checkForTestUser } from "../middleware/authMiddleware.js";
+} from '../controllers/jobController.js';
+import {
+  validateJobInput,
+  validateIdParam,
+} from '../middleware/validationMiddleware.js';
+import { checkForTestUser } from '../middleware/authMiddleware.js';
 
 router
-  .route("/")
+  .route('/')
   .get(getAllJobs)
   .post(checkForTestUser, validateJobInput, createJob);
 
-router.route("/stats").get(showStats);
+router.route('/stats').get(showStats);
 
 router
-  .route("/:id")
-  .get(validIdParam, getJob)
-  .patch(checkForTestUser, validateJobInput, updateJob)
-  .delete(checkForTestUser, validIdParam, deleteJob);
+  .route('/:id')
+  .get(validateIdParam, getJob)
+  .patch(checkForTestUser, validateJobInput, validateIdParam, updateJob)
+  .delete(checkForTestUser, validateIdParam, deleteJob);
 
 export default router;

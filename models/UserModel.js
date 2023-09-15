@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
   password: String,
   lastName: {
     type: String,
-    default: "last name",
+    default: "lastName",
   },
   location: {
     type: String,
@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.methods.toJSON = function () {
-  var obj = this.toObject();
+  let obj = this.toObject();
   delete obj.password;
   return obj;
 };
